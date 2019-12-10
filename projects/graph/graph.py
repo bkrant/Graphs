@@ -1,7 +1,4 @@
-"""
-Simple graph implementation
-"""
-from util import Stack, Queue  # These may come in handy
+from util import Queue, Stack
 
 class Graph:
 
@@ -62,14 +59,21 @@ class Graph:
                 for i in self.get_neighbors(v):
                     s.push(i)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+
+        if visited is None:
+            visited = set()
+
+        visited.add(starting_vertex)
+        print(starting_vertex)
+        [self.dft_recursive(neighbor, visited) for neighbor in self.get_neighbors(starting_vertex) if neighbor not in visited]
+        
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -149,9 +153,11 @@ if __name__ == '__main__':
     #     1, 2, 4, 7, 6, 3, 5
     #     1, 2, 4, 6, 3, 5, 7
     # '''
-    print("dft(1)")
+    print("dft(1) iterative")
     graph.dft(1)
-    # graph.dft_recursive(1)
+
+    print("dft_recursive(1)")
+    graph.dft_recursive(1)
 
     # '''
     # Valid BFS path:
